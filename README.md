@@ -21,7 +21,7 @@ The options are :
 - GWEI - This is the gas price, set it to 20 for sniping (its better)
 - GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses
 - MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
-- YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet  ** IF YOU THINK THAT THIS BOT IS A SCAM, JUST CREATE A NEW METAMASK WALLET WITH A NEW SEED PHRASE**
+- YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet  **IF YOU THINK THAT THIS BOT IS A SCAM, JUST CREATE A NEW METAMASK WALLET WITH A NEW SEED PHRASE**
 - AMOUNT_OF_WBNB - The amount you want to spend in WBNB
 - TO_PURCHASE - The token adress of the token you want to snipe
 - ENABLE_SELL - If enabled it will automaticall sell the bought token after a timer of X seconds (NOT IMPLEMENTED YET)
