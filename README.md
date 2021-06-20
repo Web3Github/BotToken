@@ -29,7 +29,9 @@ The options are :
 
 2 - To ensure the bot is working you have to approve `WBNB`
 <img src="./imags/Approve.PNG">
+
 3 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
+
 4 - Just click start and wait.
 
 ## BONUS
