@@ -39,4 +39,4 @@ If you mind launching multiple bot, just copy the whole folder into another one 
 `const PORT = 5050;`
 
 ## Donation address
-If you are satisfied and wants to keep alive the project feel free to send BNB to this address : `0x69AA682c6312bFABC1A803669a335b115AdCCD28`
+If you are satisfied and wants to keep alive the project feel free to send BNB to this address : `0xF4ef5611c04629BaC6aFD82d9630B6C1B06d4BB2`
