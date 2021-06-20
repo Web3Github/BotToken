@@ -28,7 +28,7 @@ The options are :
 - SELL_TIMER - Amount in seconds before launching sell order ( NOT IMPLEMENTED YET )
 
 2 - To ensure the bot is working you have to approve `WBNB`
-<img src="./imags/Approve.png">
+<img src="./imags/Approve.PNG">
 3 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
 4 - Just click start and wait.
 
