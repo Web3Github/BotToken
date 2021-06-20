@@ -27,8 +27,10 @@ The options are :
 - ENABLE_SELL - If enabled it will automaticall sell the bought token after a timer of X seconds (NOT IMPLEMENTED YET)
 - SELL_TIMER - Amount in seconds before launching sell order ( NOT IMPLEMENTED YET )
 
-2 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
-3 - Just click start and wait.
+2 - To ensure the bot is working you have to approve `WBNB`
+<img src="./imags/Approve.png">
+3 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
+4 - Just click start and wait.
 
 ## BONUS
 
