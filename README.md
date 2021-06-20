@@ -30,11 +30,11 @@ The options are :
 2 - To ensure the bot is working you have to approve `WBNB`
 <img src="./imags/Approve.PNG">
 
-3 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
+3 - If this is your first time launching the tool, start `install.bat` , it will run a "npm install" commands to download the prerequire libraries
 
 4 - Before you start the bot, please ensure to have swapped the desired amount of `BNB` you want to use for the buy bot into `WBNB`
 
-5 - Just click start and wait.
+5 - Just open `start.bat` and wait.
 
 ## BONUS
 
