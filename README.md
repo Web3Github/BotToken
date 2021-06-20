@@ -32,7 +32,9 @@ The options are :
 
 3 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
 
-4 - Just click start and wait.
+4 - Before you start the bot, please ensure to have swapped the desired amount of `BNB` you want to use for the buy bot into `WBNB`
+
+5 - Just click start and wait.
 
 ## BONUS
 
