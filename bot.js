@@ -164,14 +164,14 @@ const run = async () => {
       const receipt = await tx.wait(); 
       console.log(`Transaction BUY receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`);
       if(data.enableAutoSell !== 0){
-        if(data.autoApprove !== 0){
+/*         if(data.autoApprove !== 0){
           const txApprove = await tokenOutContract.approve(
             data.router,
             ethers.constants.MaxUint256
           );
           const txApproveReceipt = txApprove.wait();
           console.log(`Transaction APPROVE receipt : https://www.bscscan.com/tx/${txApproveReceipt.transactionHash}`);
-        }
+        } */
         const txBalanceOf = await tokenOutContract.balanceOf(
           data.recipient
         );
