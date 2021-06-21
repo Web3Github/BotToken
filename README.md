@@ -19,7 +19,7 @@ The options are :
 - YOUR_ADDRESS - This is your wallet address, it will be used to redirect transaction results to your wallet
 - SLIPPAGE - As in poocoin this will adjust the amount of token you have to receive for the transaction to be working, 0 equals to no slippage so transaction shouldnt fail
 - GWEI - This is the gas price, set it to 20 for sniping (its better)
-- GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses
+- GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses (I personnaly use a limit of 400000)
 - MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
 - YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet  **IF YOU THINK THAT THIS BOT IS A SCAM, JUST CREATE A NEW METAMASK WALLET WITH A NEW SEED PHRASE**
 - AMOUNT_OF_WBNB - The amount you want to spend in WBNB
