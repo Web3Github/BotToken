@@ -21,14 +21,21 @@ The options are :
 - GWEI - This is the gas price, set it to 20 for sniping (its better)
 - GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses
 - MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
-- YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet
+- YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet  **IF YOU THINK THAT THIS BOT IS A SCAM, JUST CREATE A NEW METAMASK WALLET WITH A NEW SEED PHRASE**
 - AMOUNT_OF_WBNB - The amount you want to spend in WBNB
 - TO_PURCHASE - The token adress of the token you want to snipe
-- ENABLE_SELL - If enabled it will automaticall sell the bought token after a timer of X seconds (NOT IMPLEMENTED YET)
-- SELL_TIMER - Amount in seconds before launching sell order ( NOT IMPLEMENTED YET )
+- TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `TAKE_PROFIT=2`)
+- SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SELL_AFTER_BUY=1` TO ENABLE IT AND `SELL_AFTER_BUY=0` TO DISABLE IT
+- AUTO_APPROVE - The bot will approve automatically the swap of the token SET `AUTO_APPROVE=1` TO ENABLE IT AND `AUTO_APPROVE=0` TO DISABLE IT **DO NOT ENABLE IT IF YOU MANUALLY APPROVED THE TOKEN THROUGH PANCAKE SWAP** 
 
-2 - If this is your first time launching the tool, start "install.bat" , it will run a "npm install" commands to download the prerequire libraries
-3 - Just click start and wait.
+2 - To ensure the bot is working you have to approve `WBNB`
+<img src="./imags/Approve.PNG">
+
+3 - If this is your first time launching the tool, start `install.bat` , it will run a `npm install` commands to download the prerequire libraries
+
+4 - Before you start the bot, please ensure to have swapped the desired amount of `BNB` you want to use for the buy bot into `WBNB`
+
+5 - Just open `start.bat` and wait.
 
 ## BONUS
 
@@ -37,4 +44,4 @@ If you mind launching multiple bot, just copy the whole folder into another one 
 `const PORT = 5050;`
 
 ## Donation address
-If you are satisfied and wants to keep alive the project feel free to send BNB to this address : `0x69AA682c6312bFABC1A803669a335b115AdCCD28`
+If you are satisfied and wants to keep alive the project feel free to send BNB to this address : `0xF4ef5611c04629BaC6aFD82d9630B6C1B06d4BB2`
