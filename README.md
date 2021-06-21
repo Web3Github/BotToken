@@ -2,7 +2,7 @@
 
 ## Features
 - Buy a token at it first liquidity add
-- Sell a token when the price exceed an certain amount
+- Sell a token when the price exceed an certain amount based on a multiplicator
 
 ## Pre-requisired : 
 - install NodeJS : https://nodejs.org/dist/v14.17.1/node-v14.17.1-x64.msi
