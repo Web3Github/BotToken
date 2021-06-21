@@ -3,6 +3,7 @@ import express from 'express';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import inquirer from 'inquirer';
+import BigNumber from "bignumber.js";
 
 const app = express();
 dotenv.config();
@@ -71,7 +72,12 @@ const router = new ethers.Contract(
 
 const erc = new ethers.Contract(
   data.WBNB,
-  [{"constant": true,"inputs": [{"name": "_owner","type": "address"}],"name": "balanceOf","outputs": [{"name": "balance","type": "uint256"}],"payable": false,"type": "function"}],
+  [
+    'function balanceOf(address tokenOwner) external view returns (uint256)',
+    'function approve(address spender, uint amount) public returns(bool)',
+    'function allowance(address owner, address spender) external view returns (uint256)',
+
+  ],
   account
 );  
 
@@ -80,6 +86,7 @@ const tokenOutContract = new ethers.Contract(
   [
   'function balanceOf(address tokenOwner) external view returns (uint256)',
   'function approve(address spender, uint amount) public returns(bool)',
+  'function allowance(address owner, address spender) external view returns (uint256)',
   ],
   account
 );  
@@ -90,35 +97,54 @@ const run = async () => {
 
   let checkLiq = async() => {
     const pairAddressx = await factory.getPair(tokenIn, tokenOut);
-    console.log(chalk.blue(`pairAddress: ${pairAddressx}`));
+    console.log(chalk.blue.inverse(`Liquidity Pool Address: ${pairAddressx}`));
     if (pairAddressx !== null && pairAddressx !== undefined) {
       // console.log("pairAddress.toString().indexOf('0x0000000000000')", pairAddress.toString().indexOf('0x0000000000000'));
       if (pairAddressx.toString().indexOf('0x0000000000000') > -1) {
-        console.log(chalk.cyan(`pairAddress ${pairAddressx} not detected. Auto restart`));
+        console.log(chalk.cyan.inverse(`Liquidity Pool Address :  ${pairAddressx} not detected. Auto restart`));
         return await run();
       }
     }
     const pairBNBvalue = await erc.balanceOf(pairAddressx); 
     jmlBnb = await ethers.utils.formatEther(pairBNBvalue);
-    console.log(`value BNB : ${jmlBnb}`);
+    console.log(chalk.cyan.inverse(`Current token value in BNB : ${jmlBnb}`));
   
     if(jmlBnb > data.minBnb){
       setTimeout(() => buyAction(), 3000);
     }
     else{
         initialLiquidityDetected = false;
-        console.log(' run again...');
+        console.log(chalk.blue.inverse('Run again...'));
         return await run();
       }
   }
 
    let buyAction = async() => {
+    if(parseInt(data.autoApprove) !== 0){
+      console.log(chalk.yellow.inverse(`Checking if WBNB is already approved...`));
+      let isWBNBApproved = false;
+      const isWBNBApprovedTx = await erc.allowance(
+        data.recipient,
+        data.router
+      );
+      isWBNBApproved = isWBNBApprovedTx.toString() > 0 ? true : false;
+      if(isWBNBApproved === false) {
+        console.log(chalk.yellow.inverse(`WBNB was not approved...`));
+        console.log(chalk.yellow.inverse(`Approving WBNB...`));
+        const txApprove = await erc.approve(
+          data.router,
+          ethers.constants.MaxUint256
+        );
+        const txApproveReceipt = await txApprove.wait();
+        console.log(chalk.green.inverse(`Transaction APPROVE receipt : https://www.bscscan.com/tx/${txApproveReceipt.transactionHash}`));
+      }
+      console.log(chalk.green.inverse(`WBNB was already approved...`));
+      console.log(chalk.green.inverse(`Continuing the process...`));
+    }
     if(initialLiquidityDetected === true) {
       console.log('not buy cause already buy');
         return null;
     }
-    
-    console.log('ready to buy');
     try{
       initialLiquidityDetected = true;
 
@@ -163,21 +189,36 @@ const run = async () => {
       });
      
       const receipt = await tx.wait(); 
-      console.log(`Transaction BUY receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`);
+      console.log(chalk.green.inverse(`Transaction BUY receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`));
       if(parseInt(data.enableAutoSell) !== 0){
          if(parseInt(data.autoApprove) !== 0){
-          const txApprove = await tokenOutContract.approve(
-            data.router,
-            ethers.constants.MaxUint256
+          console.log(chalk.yellow.inverse(`Checking if token is already approved...`));
+          let isTokenSwapApproved
+          const isTokenSwapApprovedTx = await tokenOutContract.allowance(
+            data.recipient,
+            data.router
           );
-          const txApproveReceipt = await txApprove.wait();
-          console.log(`Transaction APPROVE receipt : https://www.bscscan.com/tx/${txApproveReceipt.transactionHash}`);
+          isTokenSwapApproved = isTokenSwapApprovedTx.toString() > 0 ? true : false;
+          if(isTokenSwapApproved === false) {
+            console.log(chalk.yellow.inverse(`Token was not approved...`));
+            console.log(chalk.yellow.inverse(`Approving token...`));
+            const txApprove = await tokenOutContract.approve(
+              data.router,
+              ethers.constants.MaxUint256
+            );
+            const txApproveReceipt = await txApprove.wait();
+            console.log(chalk.green.inverse(`Transaction APPROVE receipt : https://www.bscscan.com/tx/${txApproveReceipt.transactionHash}`));
+          }
+          console.log(chalk.green.inverse(`Token was already approved...`));
+          console.log(chalk.green.inverse(`Continuing the process...`));
         } 
         const txBalanceOf = await tokenOutContract.balanceOf(
           data.recipient
         );
-        let amountTokenToSell = ethers.BigNumber.from(txBalanceOf.toString());
-        const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
+
+        let amountTokenToSell = new BigNumber(txBalanceOf.toString());
+
+        const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell.toString(), [tokenOut, tokenIn]);
         setTimeout(() => sellAction(currentAmountBeforeSell[1], amountTokenToSell), 3000);
       } else {
         setTimeout(() => {process.exit()},2000);
@@ -217,14 +258,12 @@ const run = async () => {
   } 
 
   let sellAction = async(currentAmountBeforeSell , amountTokenToSell) => {
-    const currentAmountOut = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
-
-    let minAmountBeforeSell = Math.floor(currentAmountBeforeSell.toNumber() * Number(data.profitCoefficient));
-
-    let isWinningSell = currentAmountOut[1].gt(minAmountBeforeSell);
+    const currentAmountOut = await router.getAmountsOut(amountTokenToSell.toString(), [tokenOut, tokenIn]);
+    let minAmountBeforeSell = Math.floor(BigNumber(currentAmountBeforeSell.toString()).toNumber() * Number(data.profitCoefficient));
+    let isWinningSell = currentAmountOut[1].gt(minAmountBeforeSell.toString());
 
     let curValueOut = await ethers.utils.formatEther(currentAmountOut[1])
-    let expectedValueOut = await ethers.utils.formatEther(minAmountBeforeSell)
+    let expectedValueOut = await ethers.utils.formatEther(minAmountBeforeSell.toString())
 
     if( isWinningSell === false) {
       console.log(chalk.red.inverse('Current token value : ' + curValueOut + ` (BNB) < ` + expectedValueOut + ' (BNB) (Price you want to sell at) '+ `\n`));
@@ -251,7 +290,7 @@ const run = async () => {
 
         console.log('Balance of : ' + amountTokenToSell);
         const tx = await router.swapExactTokensForETHSupportingFeeOnTransferTokens( 
-          amountTokenToSell,
+          amountTokenToSell.toString(),
           amountOutMin,
           [tokenOut, tokenIn],
           data.recipient,
@@ -263,7 +302,7 @@ const run = async () => {
         });
        
         const receipt = await tx.wait();
-        console.log(`Transaction SELL receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`);
+        console.log(chalk.green.inverse(`Transaction SELL receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`));
         setTimeout(() => {process.exit()},2000);
       }catch(err){
         let error = JSON.parse(JSON.stringify(err));
