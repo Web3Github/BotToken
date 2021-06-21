@@ -24,8 +24,9 @@ The options are :
 - YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet  **IF YOU THINK THAT THIS BOT IS A SCAM, JUST CREATE A NEW METAMASK WALLET WITH A NEW SEED PHRASE**
 - AMOUNT_OF_WBNB - The amount you want to spend in WBNB
 - TO_PURCHASE - The token adress of the token you want to snipe
-- ENABLE_SELL - If enabled it will automaticall sell the bought token after a timer of X seconds (NOT IMPLEMENTED YET)
-- SELL_TIMER - Amount in seconds before launching sell order ( NOT IMPLEMENTED YET )
+- TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `TAKE_PROFIT=2`)
+- SELL_AFTER_BUY - The bot will lsell after the buy transaction when the token value will be greater or equals to the wanted value
+- AUTO_APPROVE - The bot will approve automatically the swap of the token **DO NOT ENABLE IT IF YOU MANUALLY APPROVED THE TOKEN THROUGH PANCAKE SWAP** 
 
 2 - To ensure the bot is working you have to approve `WBNB`
 <img src="./imags/Approve.PNG">
