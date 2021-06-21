@@ -2,6 +2,7 @@
 
 ## Features
 - Buy a token at it first liquidity add
+- Buy the dip of a token (Next feature)
 - Sell a token when the price exceed an certain amount based on a multiplicator
 
 ## Pre-requisired : 
