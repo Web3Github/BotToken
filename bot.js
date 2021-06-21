@@ -39,11 +39,12 @@ let initialLiquidityDetected = false;
 let jmlBnb = 0;
 
 const bscMainnetUrl = 'https://bsc-dataseed1.defibit.io/' //https://bsc-dataseed1.defibit.io/ https://bsc-dataseed.binance.org/
+//const bscMainnetUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545/' // WHEN TESTNET
 const wss = 'wss://bsc-ws-node.nariox.org:443';
 const mnemonic = process.env.YOUR_MNEMONIC //your memonic;
 const tokenIn = data.WBNB;
 const tokenOut = data.to_PURCHASE;
-// const provider = new ethers.providers.JsonRpcProvider(bscMainnetUrl)
+//const provider = new ethers.providers.JsonRpcProvider(bscMainnetUrl)
 const provider = new ethers.providers.WebSocketProvider(wss);
 const wallet = new ethers.Wallet.fromMnemonic(mnemonic);
 const account = wallet.connect(provider);
@@ -163,19 +164,19 @@ const run = async () => {
      
       const receipt = await tx.wait(); 
       console.log(`Transaction BUY receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`);
-      if(data.enableAutoSell !== 0){
-/*         if(data.autoApprove !== 0){
+      if(parseInt(data.enableAutoSell) !== 0){
+         if(parseInt(data.autoApprove) !== 0){
           const txApprove = await tokenOutContract.approve(
             data.router,
             ethers.constants.MaxUint256
           );
-          const txApproveReceipt = txApprove.wait();
+          const txApproveReceipt = await txApprove.wait();
           console.log(`Transaction APPROVE receipt : https://www.bscscan.com/tx/${txApproveReceipt.transactionHash}`);
-        } */
+        } 
         const txBalanceOf = await tokenOutContract.balanceOf(
           data.recipient
         );
-        let amountTokenToSell = ethers.BigNumber.from(txBalanceOf);
+        let amountTokenToSell = ethers.BigNumber.from(txBalanceOf.toString());
         const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
         setTimeout(() => sellAction(currentAmountBeforeSell[1], amountTokenToSell), 3000);
       } else {

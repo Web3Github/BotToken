@@ -43,5 +43,33 @@ If you mind launching multiple bot, just copy the whole folder into another one 
 
 `const PORT = 5050;`
 
+## MAIN MODE
+
+WBNB Contract main-net :
+`const WBNB_CONTRACT = 0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c;`
+
+Pancake swap router main-net : 
+
+`const ROUTER = 0x10ED43C718714eb63d5aA57B78B54704E256024E;`
+
+Pancake swap factory main-net : 
+
+`const FACTORY = 0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73;`
+
+
+## TEST MODE
+
+WBNB Contract test-net :
+
+`const WBNB_CONTRACT = 0xae13d989dac2f0debff460ac112a837c89baa7cd;`
+
+Pancake swap router test-net : 
+
+`const ROUTER = 0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3;`
+
+Pancake swap factory test-net : 
+
+`const FACTORY = 0xb7926c0430afb07aa7defde6da862ae0bde767bc;`
+
 ## Donation address
 If you are satisfied and wants to keep alive the project feel free to send BNB to this address : `0xF4ef5611c04629BaC6aFD82d9630B6C1B06d4BB2`
