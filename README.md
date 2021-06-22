@@ -8,6 +8,7 @@
 
 ## Pre-requisired : 
 - install NodeJS : https://nodejs.org/dist/v14.17.1/node-v14.17.1-x64.msi
+- `TO USE THE BOT YOU HAVE TO WRAP THE AMOUNT OF BNB YOU WANT TO USE FOR THE TRANSACTION (EXCLUDING TRANSACTION FEES)`
 
 ## How to use : 
 
