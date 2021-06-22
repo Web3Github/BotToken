@@ -3,7 +3,6 @@ import express from 'express';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import inquirer from 'inquirer';
-import BigNumber from "bignumber.js";
 
 const app = express();
 dotenv.config();
@@ -175,8 +174,7 @@ const run = async () => {
       console.log(chalk.yellow(`data.gasLimit: ${data.gasLimit}`));
       console.log(chalk.yellow(`data.gasPrice: ${data.gasPrice}`));
 
-      const tx = await router.swapExactTokensForTokensSupportingFeeOnTransferTokens( //uncomment this if you want to buy deflationary token
-      // const tx = await router.swapExactTokensForTokens( //uncomment here if you want to buy token
+      const tx = await router.swapExactTokensForTokensSupportingFeeOnTransferTokens(
         amountIn,
         amountOutMin,
         [tokenIn, tokenOut],
@@ -216,9 +214,9 @@ const run = async () => {
           data.recipient
         );
 
-        let amountTokenToSell = new BigNumber(txBalanceOf.toString());
+        let amountTokenToSell = txBalanceOf;
 
-        const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell.toString(), [tokenOut, tokenIn]);
+        const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
         setTimeout(() => sellAction(currentAmountBeforeSell[1], amountTokenToSell), 3000);
       } else {
         setTimeout(() => {process.exit()},2000);
@@ -258,12 +256,15 @@ const run = async () => {
   } 
 
   let sellAction = async(currentAmountBeforeSell , amountTokenToSell) => {
-    const currentAmountOut = await router.getAmountsOut(amountTokenToSell.toString(), [tokenOut, tokenIn]);
-    let minAmountBeforeSell = Math.floor(BigNumber(currentAmountBeforeSell.toString()).toNumber() * Number(data.profitCoefficient));
-    let isWinningSell = currentAmountOut[1].gt(minAmountBeforeSell.toString());
+    const currentAmountOut = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
+    let multiplicator = await ethers.BigNumber.from(Number(data.profitCoefficient).toString());
+
+    let minAmountBeforeSell = currentAmountBeforeSell.mul(multiplicator);
+
+    let isWinningSell = currentAmountOut[1].gt(minAmountBeforeSell);
 
     let curValueOut = await ethers.utils.formatEther(currentAmountOut[1])
-    let expectedValueOut = await ethers.utils.formatEther(minAmountBeforeSell.toString())
+    let expectedValueOut = await ethers.utils.formatEther(minAmountBeforeSell)
 
     if( isWinningSell === false) {
       console.log(chalk.red.inverse('Current token value : ' + curValueOut + ` (BNB) < ` + expectedValueOut + ' (BNB) (Price you want to sell at) '+ `\n`));
