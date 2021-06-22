@@ -27,7 +27,7 @@ The options are :
 - TO_PURCHASE - The token adress of the token you want to snipe
 - TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `TAKE_PROFIT=2`)
 - SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SELL_AFTER_BUY=1` TO ENABLE IT AND `SELL_AFTER_BUY=0` TO DISABLE IT
-- AUTO_APPROVE - The bot will approve automatically the swap of the token SET `AUTO_APPROVE=1` TO ENABLE IT AND `AUTO_APPROVE=0` TO DISABLE IT **DO NOT ENABLE IT IF YOU MANUALLY APPROVED THE TOKEN THROUGH PANCAKE SWAP** 
+- AUTO_APPROVE - The bot will approve automatically the swap of the token SET `AUTO_APPROVE=1` TO ENABLE IT AND `AUTO_APPROVE=0` TO DISABLE IT
 
 2 - To ensure the bot is working you have to approve `WBNB`
 <img src="./imags/Approve.PNG">
