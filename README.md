@@ -19,7 +19,6 @@ The options are :
 - FACTORY - You don't need to change it, this is the official Pancake Swap V2 Factory
 - ROUTER - You don't need to change it, this is the official Pancake Swap V2 Router
 - YOUR_ADDRESS - This is your wallet address, it will be used to redirect transaction results to your wallet
-- SLIPPAGE - As in poocoin this will adjust the amount of token you have to receive for the transaction to be working, 0 equals to no slippage so transaction shouldnt fail
 - GWEI - This is the gas price, set it to 20 for sniping (its better)
 - GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses (I personnaly use a limit of 400000)
 - MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
