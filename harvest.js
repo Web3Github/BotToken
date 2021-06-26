@@ -30,9 +30,9 @@ const data = {
 
   harvest_pool_id : process.env.HARVEST_POOL_ID, // Pool id 
 
-  harvest_token_address : process.env.HARVEST_TOKEN_ADDRESS, // Token address
+  harvest_token_address : process.env.HARVEST_TOKEN_ADDRESS, // FIRST TOKEN ADDRESS (ex : BUSD, BNB, WBNB...)
   
-  harvest_token_address_b : process.env.HARVEST_TOKEN_ADDRESS_B, // Second token of the pair (ex : BUSD, BNB, WBNB...)
+  harvest_token_address_b : process.env.HARVEST_TOKEN_ADDRESS_B, // SECOND TOKEN ADDRESS ( ex : LAVA, FLOKI...)
 
   harvest_masterchef_address : process.env.HARVEST_MASTERCHEF_ADDRESS, // Masterchef address
 
@@ -87,7 +87,7 @@ const erc = new ethers.Contract(
 );  
 
  const tokenOutContract = new ethers.Contract(
-  data.harvest_token_address,
+  data.harvest_token_address_b,
   [
   'function balanceOf(address tokenOwner) external view returns (uint256)',
   'function approve(address spender, uint amount) public returns(bool)',
@@ -159,7 +159,6 @@ const run = async () => {
 let checkHarvestBlock = async() => {
   // Recuperer le block actuel
   let currentBlock = (await provider.getBlockNumber()).toString();
-  console.log(currentBlock);
 
   // Comparer avec le block du unlock
   console.log(chalk.blue.inverse(`Comparing current block with unlock block ...`));
@@ -287,8 +286,13 @@ let sellAction = async() => {
   );
   // Montant actuel de token
   let currentTokenAmount = txBalanceOf;
+
   // Calcul du montant de token a vendre
-  let amountTokenToSell = ethers.BigNumber.from((currentTokenAmount.toString() * purcentToSell).toFixed());
+  let amountTokenToSell = (currentTokenAmount.toString() * purcentToSell).toFixed();
+
+  if ( amountTokenToSell >= currentTokenAmount.toString()) {
+    amountTokenToSell = currentTokenAmount.toString();
+  }
 
   // Vente du pourcentage de token
   try{
@@ -304,8 +308,8 @@ let sellAction = async() => {
       console.log(chalk.yellow(`data.gasLimit: ${data.gasLimit}`));
       console.log(chalk.yellow(`data.gasPrice: ${data.gasPrice}`));
 
-      const tx = await router.swapExactTokensForETHSupportingFeeOnTransferTokens( 
-        amountTokenToSell.toString(),
+       const tx = await router.swapExactTokensForETHSupportingFeeOnTransferTokens( 
+        amountTokenToSell,
         0,
         [data.harvest_token_address_b, tokenWBNB],
         data.recipient,

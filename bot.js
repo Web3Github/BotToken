@@ -269,6 +269,9 @@ let beforeSellAction = async() => {
   let currentTokenAmount = txBalanceOf;
   // Calcul du montant de token a vendre
   let amountTokenToSell = ethers.BigNumber.from((currentTokenAmount.toString() * purcentToSell).toFixed());
+  if ( amountTokenToSell >= currentTokenAmount.toString() ){
+    amountTokenToSell = currentTokenAmount.toString();
+  }
 
   const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
   setTimeout(() => sellAction(currentAmountBeforeSell[1], amountTokenToSell), 3000);
@@ -309,7 +312,7 @@ let sellAction = async(currentAmountBeforeSell , amountTokenToSell) => {
 
       console.log('Balance of : ' + amountTokenToSell);
        const tx = await router.swapExactTokensForETHSupportingFeeOnTransferTokens( 
-        amountTokenToSell.toString(),
+        amountTokenToSell,
         amountOutMin,
         [tokenOut, tokenIn],
         data.recipient,
