@@ -14,20 +14,37 @@
 
 1 - Open .env with a text editor to adjust the bot as you like.
 
-The options are : 
+### BASIC OPTIONS
 - WBNB_CONTRACT - You don't need to change it, this is the offical WBNB contract
 - FACTORY - You don't need to change it, this is the official Pancake Swap V2 Factory
 - ROUTER - You don't need to change it, this is the official Pancake Swap V2 Router
 - YOUR_ADDRESS - This is your wallet address, it will be used to redirect transaction results to your wallet
-- GWEI - This is the gas price, set it to 20 for sniping (its better)
-- GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses (I personnaly use a limit of 400000)
-- MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
 - YOUR_MNEMONIC - Your seed phrase, we need it to create a temporary wallet  **IF YOU THINK THAT THIS BOT IS A SCAM, JUST CREATE A NEW METAMASK WALLET WITH A NEW SEED PHRASE**
-- AMOUNT_OF_WBNB - The amount you want to spend in WBNB
-- TO_PURCHASE - The token adress of the token you want to snipe
-- TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `TAKE_PROFIT=2`) **INTEGERS ONLY**
-- SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SELL_AFTER_BUY=1` TO ENABLE IT AND `SELL_AFTER_BUY=0` TO DISABLE IT
-- AUTO_APPROVE - The bot will approve automatically the swap of the token SET `AUTO_APPROVE=1` TO ENABLE IT AND `AUTO_APPROVE=0` TO DISABLE IT
+
+### COMMON OPTIONS
+- COMMON_GWEI - This is the gas price, set it to 20 for sniping (its better)
+- COMMON_GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses (I personnaly use a limit of 400000)
+- COMMON_AUTO_APPROVE - The bot will approve automatically the swap of the token SET `COMMON_AUTO_APPROVE=1` TO ENABLE IT AND `COMMON_AUTO_APPROVE=0` TO DISABLE IT
+
+### SNIPE BOT OPTIONS
+- SNIPE_BOT_MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
+- SNIPE_BOT_AMOUNT_OF_WBNB - The amount you want to spend in WBNB
+- SNIPE_BOT_TO_PURCHASE - The token adress of the token you want to snipe
+- SNIPE_BOT_TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `SNIPE_BOT_TAKE_PROFIT=2`)
+- SNIPE_BOT_SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SNIPE_BOT_SELL_AFTER_BUY=1` TO ENABLE IT AND `SNIPE_BOT_SELL_AFTER_BUY=0` TO DISABLE IT
+- SNIPE_BOT_SELL_ONLY - The bot will only sell when profit is corresponding to what you entered in the parameters, `SNIPE_BOT_SELL_ONLY=1` to enable, and `SNIPE_BOT_SELL_ONLY=0` to disable
+- SNIPE_BOT_SELL_BALANCE_PURCENT - The bot will sell an amount of your balance based on the value you entered (Example : 25 = 25% of your token balance)
+
+### HARVEST BOT OPTIONS (SHOULD WORK BUT CONSIDER ITS STILL IN BETA)
+- HARVEST_TOKEN_ADDRESS - BUSD TOKEN ADDRESS, can be replaced by any token
+- HARVEST_TOKEN_ADDRESS_B - The other token adress of the pair, in example : Lavacake, FrozenCake...
+- HARVEST_POOL_ID - To find the pool id, look at your deposit in the pool transaction, click on "click to see more", then "decode input data" : <img src="./imags/PoolId.PNG">
+- HARVEST_MASTERCHEF_ADDRESS - To find the masterchef address, look at your deposit in the pool transaction and click on the contract as shown in the image : <img src="./imags/Masterchief.PNG">
+- HARVEST_SELL_BALANCE_PURCENT - Purcent of the balance to sell after withdraw
+- HARVEST_SELL_UNLOCK_BLOCK - Block when the harvest will be unlocked
+- HARVEST_AUTO_APPROVE - Auto approve LP pair, token pair, and WBNB pair if not already approved, `HARVEST_AUTO_APPROVE=1` to enable, and `HARVEST_AUTO_APPROVE=0` to disable
+- HARVEST_AUTO_SELL - Auto sell after withdrawing `HARVEST_AUTO_SELL=1` to enable, and `HARVEST_AUTO_SELL=0` to disable
+
 
 2 - To ensure the bot is working you have to approve `WBNB`
 <img src="./imags/Approve.PNG">
