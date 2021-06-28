@@ -100,7 +100,7 @@ const erc = new ethers.Contract(
 const masterChefContract = new ethers.Contract(
     data.harvest_masterchef_address,
     [
-    'function userInfo(uint poolId, address tokenOwner) external view returns (uint256 amountInPool, uint256 rewardDebt, uint256 rewardLockedUp)',
+    'function userInfo(uint poolId, address tokenOwner) external view returns (uint256 amountInPool, uint256 rewardDebt)', // TO ADJUST BASED ON THE MASTERCHEF CONTRACT
     'function withdraw(uint poolId, uint amountInPool) external returns (bool)',
     ],
     account
@@ -174,7 +174,7 @@ let checkHarvestBlock = async() => {
 
 let harvestAction = async() => {
       // Montant a withdraw
-      let userInfos = await masterChefContract.userInfo(1, data.recipient);
+      let userInfos = await masterChefContract.userInfo(data.harvest_pool_id, data.recipient);
       console.log(chalk.yellow.inverse(`Withdrawing...` ));
 
       // Masterchef contract => Withdraw (La fonction withdraw recupere les rewards aussi, est ce que ca harvest ??? Bonne Question)
@@ -197,6 +197,7 @@ let removeLiquidityAction = async() => {
     [
       'function balanceOf(address tokenOwner) external view returns (uint256)',
       'function allowance(address owner, address spender) external view returns (uint256)',
+      'function approve(address spender, uint amount) public returns(bool)'
     ],
     account
   )
@@ -212,7 +213,7 @@ let removeLiquidityAction = async() => {
   if(isLPTokenApproved === false) {
     console.log(chalk.yellow.inverse(`LP Token was not approved...`));
     console.log(chalk.yellow.inverse(`Approving LP Token...`));
-    const txApprove = await erc.approve(
+    const txApprove = await liquidityPoolContract.approve(
       data.router,
       ethers.constants.MaxUint256
     );
