@@ -24,14 +24,14 @@
 ### COMMON OPTIONS
 - COMMON_GWEI - This is the gas price, set it to 20 for sniping (its better)
 - COMMON_GAS_LIMIT - Gas limit amount, will output a big transaction fee price but it will be regulated depending on how much the transaction uses (I personnaly use a limit of 400000)
-- COMMON_AUTO_APPROVE - The bot will approve automatically the swap of the token SET `AUTO_APPROVE=1` TO ENABLE IT AND `AUTO_APPROVE=0` TO DISABLE IT
+- COMMON_AUTO_APPROVE - The bot will approve automatically the swap of the token SET `COMMON_AUTO_APPROVE=1` TO ENABLE IT AND `COMMON_AUTO_APPROVE=0` TO DISABLE IT
 
 ### SNIPE BOT OPTIONS
 - SNIPE_BOT_MIN_LIQUIDITY_ADDED - Minimum amount in BNB to wait before buying
 - SNIPE_BOT_AMOUNT_OF_WBNB - The amount you want to spend in WBNB
 - SNIPE_BOT_TO_PURCHASE - The token adress of the token you want to snipe
-- SNIPE_BOT_TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `TAKE_PROFIT=2`)
-- SNIPE_BOT_SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SELL_AFTER_BUY=1` TO ENABLE IT AND `SELL_AFTER_BUY=0` TO DISABLE IT
+- SNIPE_BOT_TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `SNIPE_BOT_TAKE_PROFIT=2`)
+- SNIPE_BOT_SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SNIPE_BOT_SELL_AFTER_BUY=1` TO ENABLE IT AND `SNIPE_BOT_SELL_AFTER_BUY=0` TO DISABLE IT
 - SNIPE_BOT_SELL_ONLY - The bot will only sell when profit is corresponding to what you entered in the parameters, `SNIPE_BOT_SELL_ONLY=1` to enable, and `SNIPE_BOT_SELL_ONLY=0` to disable
 - SNIPE_BOT_SELL_BALANCE_PURCENT - The bot will sell an amount of your balance based on the value you entered (Example : 25 = 25% of your token balance)
 
