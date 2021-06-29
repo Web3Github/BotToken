@@ -38,7 +38,7 @@ const data = {
 
   harvest_sell_balance_purcent : process.env.HARVEST_SELL_BALANCE_PURCENT, // Purcent of the balance to sell
 
-  harvest_unlock_block : process.env.HARVEST_SELL_UNLOCK_BLOCK, // Unlock harvest block
+  harvest_unlock_block : process.env.HARVEST_SELL_UNLOCK_TIMESTAMP_UTC, // Unlock harvest timestamp
 
   harvest_auto_sell : process.env.HARVEST_AUTO_SELL // Auto sell after withdraw
 
@@ -158,12 +158,11 @@ const run = async () => {
 
 let checkHarvestBlock = async() => {
   // Recuperer le block actuel
-  let currentBlock = (await provider.getBlockNumber()).toString();
-
+  let currentBlock = (await provider.getBlock());
   // Comparer avec le block du unlock
   console.log(chalk.blue.inverse(`Comparing current block with unlock block ...`));
-  if ( currentBlock >= data.harvest_unlock_block ) {
-      console.log(chalk.green.inverse(`Current block : ` + currentBlock + ` >=  ` + data.harvest_unlock_block + ` : Unlock Block ` ));
+  if ( currentBlock.timestamp >= data.harvest_unlock_block ) {
+      console.log(chalk.green.inverse(`Current block timestamp : ` + currentBlock.timestamp + ` >=  ` + data.harvest_unlock_block + ` : Unlock Block timestamp ` ));
       console.log(chalk.green.inverse(`Harvest is possible !`));
       setTimeout(() => harvestAction(), 3000);
   } else {
