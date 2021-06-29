@@ -41,7 +41,7 @@
 - HARVEST_POOL_ID - To find the pool id, look at your deposit in the pool transaction, click on "click to see more", then "decode input data" : <img src="./imags/PoolId.PNG">
 - HARVEST_MASTERCHEF_ADDRESS - To find the masterchef address, look at your deposit in the pool transaction and click on the contract as shown in the image : <img src="./imags/Masterchief.PNG">
 - HARVEST_SELL_BALANCE_PURCENT - Purcent of the balance to sell after withdraw, possible values are 25/50/100
-- HARVEST_SELL_UNLOCK_BLOCK - Block when the harvest will be unlocked
+- HARVEST_SELL_UNLOCK_TIMESTAMP_UTC - Timestamp when the harvest will be unlocked, use this tool to get the timestamp : http://www.timestamp.fr/?
 - HARVEST_AUTO_APPROVE - Auto approve LP pair, token pair, and WBNB pair if not already approved, `HARVEST_AUTO_APPROVE=1` to enable, and `HARVEST_AUTO_APPROVE=0` to disable
 - HARVEST_AUTO_SELL - Auto sell after withdrawing `HARVEST_AUTO_SELL=1` to enable, and `HARVEST_AUTO_SELL=0` to disable
 
