@@ -1,4 +1,4 @@
-import ethers from 'ethers';
+import ethers, { BigNumber } from 'ethers';
 import express from 'express';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
@@ -258,8 +258,19 @@ let buyAction = async() => {
 
 let beforeSellAction = async() => {
   if(parseInt(data.enableAutoSell) !== 0){
+
   // Pourcent de la balance a vendre
-  let purcentToSell = parseFloat(data.balance_purcent/100);
+  let purcentToSell = 0;
+  switch (parseInt(data.balance_purcent)) {
+    case 25:
+      purcentToSell = 4;
+      break;
+    case 50:
+      purcentToSell = 2;
+      break;
+    default:
+      purcentToSell = 1;
+  }
 
   // Recuperation de la balance
   const txBalanceOf = await tokenOutContract.balanceOf(
@@ -267,8 +278,9 @@ let beforeSellAction = async() => {
   );
   // Montant actuel de token
   let currentTokenAmount = txBalanceOf;
+
   // Calcul du montant de token a vendre
-  let amountTokenToSell = ethers.BigNumber.from((currentTokenAmount.toString() * purcentToSell).toFixed());
+  let amountTokenToSell = currentTokenAmount.div(ethers.BigNumber.from(purcentToSell));
   if ( amountTokenToSell >= currentTokenAmount.toString() ){
     amountTokenToSell = currentTokenAmount.toString();
   }

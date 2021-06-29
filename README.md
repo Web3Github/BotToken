@@ -33,14 +33,14 @@
 - SNIPE_BOT_TAKE_PROFIT - Profit multiplicator (Example : You bought for 1BNB of a token and you want to sell for 2 BNB then you should set `SNIPE_BOT_TAKE_PROFIT=2`)
 - SNIPE_BOT_SELL_AFTER_BUY - The bot will sell after the buy transaction when the token value will be greater or equals to the wanted value SET `SNIPE_BOT_SELL_AFTER_BUY=1` TO ENABLE IT AND `SNIPE_BOT_SELL_AFTER_BUY=0` TO DISABLE IT
 - SNIPE_BOT_SELL_ONLY - The bot will only sell when profit is corresponding to what you entered in the parameters, `SNIPE_BOT_SELL_ONLY=1` to enable, and `SNIPE_BOT_SELL_ONLY=0` to disable
-- SNIPE_BOT_SELL_BALANCE_PURCENT - The bot will sell an amount of your balance based on the value you entered (Example : 25 = 25% of your token balance)
+- SNIPE_BOT_SELL_BALANCE_PURCENT - The bot will sell an amount of your balance based on the value you entered, possible values are 25/50/100
 
 ### HARVEST BOT OPTIONS (SHOULD WORK BUT CONSIDER ITS STILL IN BETA)
 - HARVEST_TOKEN_ADDRESS - BUSD TOKEN ADDRESS, can be replaced by any token
 - HARVEST_TOKEN_ADDRESS_B - The other token adress of the pair, in example : Lavacake, FrozenCake...
 - HARVEST_POOL_ID - To find the pool id, look at your deposit in the pool transaction, click on "click to see more", then "decode input data" : <img src="./imags/PoolId.PNG">
 - HARVEST_MASTERCHEF_ADDRESS - To find the masterchef address, look at your deposit in the pool transaction and click on the contract as shown in the image : <img src="./imags/Masterchief.PNG">
-- HARVEST_SELL_BALANCE_PURCENT - Purcent of the balance to sell after withdraw
+- HARVEST_SELL_BALANCE_PURCENT - Purcent of the balance to sell after withdraw, possible values are 25/50/100
 - HARVEST_SELL_UNLOCK_BLOCK - Block when the harvest will be unlocked
 - HARVEST_AUTO_APPROVE - Auto approve LP pair, token pair, and WBNB pair if not already approved, `HARVEST_AUTO_APPROVE=1` to enable, and `HARVEST_AUTO_APPROVE=0` to disable
 - HARVEST_AUTO_SELL - Auto sell after withdrawing `HARVEST_AUTO_SELL=1` to enable, and `HARVEST_AUTO_SELL=0` to disable

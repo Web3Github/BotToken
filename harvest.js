@@ -100,7 +100,7 @@ const erc = new ethers.Contract(
 const masterChefContract = new ethers.Contract(
     data.harvest_masterchef_address,
     [
-    'function userInfo(uint poolId, address tokenOwner) external view returns (uint256 amountInPool, uint256 rewardDebt)', // TO ADJUST BASED ON THE MASTERCHEF CONTRACT
+    'function userInfo(uint poolId, address tokenOwner) external view returns (uint256 amountInPool, uint256 rewardDebt, uint256 rewardLockedUp)', // TO ADJUST BASED ON THE MASTERCHEF CONTRACT
     'function withdraw(uint poolId, uint amountInPool) external returns (bool)',
     ],
     account
@@ -279,7 +279,17 @@ let removeLiquidityAction = async() => {
 let sellAction = async() => {
 
   // Pourcent de la balance a vendre
-  let purcentToSell = parseFloat(data.harvest_sell_balance_purcent/100);
+  let purcentToSell = 0;
+  switch (parseInt(data.balance_purcent)) {
+    case 25:
+      purcentToSell = 4;
+      break;
+    case 50:
+      purcentToSell = 2;
+      break;
+    default:
+      purcentToSell = 1;
+  }
 
   // Recuperation de la balance
   const txBalanceOf = await tokenOutContract.balanceOf(
@@ -289,7 +299,7 @@ let sellAction = async() => {
   let currentTokenAmount = txBalanceOf;
 
   // Calcul du montant de token a vendre
-  let amountTokenToSell = (currentTokenAmount.toString() * purcentToSell).toFixed();
+  let amountTokenToSell = currentTokenAmount.div(ethers.BigNumber.from(purcentToSell));
 
   if ( amountTokenToSell >= currentTokenAmount.toString()) {
     amountTokenToSell = currentTokenAmount.toString();
