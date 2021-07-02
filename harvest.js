@@ -38,7 +38,11 @@ const data = {
 
   harvest_sell_balance_purcent : process.env.HARVEST_SELL_BALANCE_PURCENT, // Purcent of the balance to sell
 
-  harvest_unlock_block : process.env.HARVEST_SELL_UNLOCK_TIMESTAMP_UTC, // Unlock harvest timestamp
+  harvest_unlock_block : process.env.HARVEST_SELL_UNLOCK_BLOCK, // Unlock harvest block
+
+  harvest_unlock_timestamp : process.env.HARVEST_SELL_UNLOCK_TIMESTAMP_UTC, // Unlock harvest timestamp
+
+  harvest_is_unlock_timestamp : process.env.HARVEST_IS_UNLOCK_TIMESTAMP, // Is unlock in timestamp or block
 
   harvest_auto_sell : process.env.HARVEST_AUTO_SELL // Auto sell after withdraw
 
@@ -100,8 +104,7 @@ const erc = new ethers.Contract(
 const masterChefContract = new ethers.Contract(
     data.harvest_masterchef_address,
     [
-    'function userInfo(uint poolId, address tokenOwner) external view returns (uint256 amountInPool, uint256 rewardDebt, uint256 rewardLockedUp)', // TO ADJUST BASED ON THE MASTERCHEF CONTRACT
-    'function withdraw(uint poolId, uint amountInPool) external returns (bool)',
+      'function deposit(uint poolId, uint amount, adress referrer) public returns(bool)'
     ],
     account
 );
@@ -161,8 +164,16 @@ let checkHarvestBlock = async() => {
   let currentBlock = (await provider.getBlock());
   // Comparer avec le block du unlock
   console.log(chalk.blue.inverse(`Comparing current block with unlock block ...`));
-  if ( currentBlock.timestamp >= data.harvest_unlock_block ) {
-      console.log(chalk.green.inverse(`Current block timestamp : ` + currentBlock.timestamp + ` >=  ` + data.harvest_unlock_block + ` : Unlock Block timestamp ` ));
+
+  let unlockCondition = null;
+
+  if ( parseInt(data.harvest_is_unlock_timestamp) !== 0){
+    unlockCondition = currentBlock.timestamp >= data.harvest_unlock_timestamp;
+  } else {
+    unlockCondition = currentBlock.number >= data.harvest_unlock_block;
+  }
+
+  if ( unlockCondition === true ) {
       console.log(chalk.green.inverse(`Harvest is possible !`));
       setTimeout(() => harvestAction(), 3000);
   } else {
@@ -173,13 +184,11 @@ let checkHarvestBlock = async() => {
 
 let harvestAction = async() => {
       // Montant a withdraw
-      let userInfos = await masterChefContract.userInfo(data.harvest_pool_id, data.recipient);
       console.log(chalk.yellow.inverse(`Withdrawing...` ));
 
-      // Masterchef contract => Withdraw (La fonction withdraw recupere les rewards aussi, est ce que ca harvest ??? Bonne Question)
-      const tx = await masterChefContract.withdraw(
-      data.harvest_pool_id,
-      userInfos[0].toString()
+      // Masterchef contract (Deposit trigger la payRewardLockedUp)
+      const tx = await masterChefContract.deposit(
+      data.harvest_pool_id
       );
     
     const receipt = await tx.wait(); 
@@ -260,7 +269,7 @@ let sellAction = async() => {
     {
       type: 'confirm',
       name: 'runAgain',
-      message: 'Do you want to run again thi bot?',
+      message: 'Do you want to run again this bot?',
     },
   ])
   .then(answers => {
