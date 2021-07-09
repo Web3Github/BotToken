@@ -46,7 +46,7 @@ let jmlBnb = 0;
 
 const bscMainnetUrl = 'https://bsc-dataseed1.ninicoin.io/' //https://bsc-dataseed1.defibit.io/ https://bsc-dataseed.binance.org/
 //const bscMainnetUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545/' // WHEN TESTNET
-const wss = 'wss://bsc-ws-node.nariox.org:443';
+const wss = 'wss://patient-damp-frog.bsc.quiknode.pro/668b094a1fd1185b3f60c7c420ad635eb8622359/';
 const mnemonic = process.env.YOUR_MNEMONIC //your memonic;
 const tokenIn = data.WBNB;
 const tokenOut = data.to_PURCHASE;
@@ -165,7 +165,7 @@ let checkLiq = async() => {
   console.log(chalk.cyan.inverse(`Current token value in BNB : ${jmlBnb}`));
 
   if ( jmlBnb > data.minBnb ) {
-      setTimeout(() => buyAction(), 3000);
+      buyAction();
   } else {
       initialLiquidityDetected = false;
       console.log(chalk.blue.inverse('Run again...'));
@@ -218,7 +218,7 @@ let buyAction = async() => {
     const receipt = await tx.wait(); 
     console.log(chalk.green.inverse(`Transaction BUY receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`));
     if(parseInt(data.enableAutoSell) !== 0){
-      setTimeout(() => beforeSellAction(), 3000);
+      beforeSellAction();
     } else {
       setTimeout(() => {process.exit()},2000);
     }
@@ -286,7 +286,7 @@ let beforeSellAction = async() => {
   }
 
   const currentAmountBeforeSell = await router.getAmountsOut(amountTokenToSell, [tokenOut, tokenIn]);
-  setTimeout(() => sellAction(currentAmountBeforeSell[1], amountTokenToSell), 3000);
+  sellAction(currentAmountBeforeSell[1], amountTokenToSell);
   }
 }
 
@@ -301,7 +301,7 @@ let sellAction = async(currentAmountBeforeSell , amountTokenToSell) => {
 
   if( isWinningSell === false) {
     console.log(chalk.red.inverse('Current token value : ' + curValueOut + ` (BNB) < ` + expectedValueOut + ' (BNB) (Price you want to sell at) '+ `\n`));
-    setTimeout(() => sellAction(currentAmountBeforeSell, amountTokenToSell), 3000);
+    sellAction(currentAmountBeforeSell, amountTokenToSell);
   }else {
     console.log(chalk.green.inverse('Current Token Value : ' + curValueOut  + ` (BNB) > ` + expectedValueOut + ` (BNB)\n`));
     console.log('ready to sell');

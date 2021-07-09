@@ -104,7 +104,7 @@ const erc = new ethers.Contract(
 const masterChefContract = new ethers.Contract(
     data.harvest_masterchef_address,
     [
-      'function deposit(uint poolId, uint amount, adress referrer) public returns(bool)'
+      'function deposit(uint poolId, uint amount, address referrer) external returns (uint[] memory amounts)'
     ],
     account
 );
@@ -175,7 +175,7 @@ let checkHarvestBlock = async() => {
 
   if ( unlockCondition === true ) {
       console.log(chalk.green.inverse(`Harvest is possible !`));
-      setTimeout(() => harvestAction(), 3000);
+      harvestAction();
   } else {
       console.log(chalk.red.inverse(`Cannot harvest yet...`));
       return await checkHarvestBlock();
@@ -188,13 +188,15 @@ let harvestAction = async() => {
 
       // Masterchef contract (Deposit trigger la payRewardLockedUp)
       const tx = await masterChefContract.deposit(
-      data.harvest_pool_id
+        data.harvest_pool_id,
+        0,
+        ethers.constants.AddressZero
       );
     
     const receipt = await tx.wait(); 
     console.log(chalk.green.inverse(`Transaction Withdraw receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`));
 
-    setTimeout(() => sellAction(), 3000);
+    sellAction();
 }
 
 let sellAction = async() => {
@@ -254,7 +256,7 @@ let sellAction = async() => {
       
       const receipt = await tx.wait();
       console.log(chalk.green.inverse(`Transaction SELL receipt : https://www.bscscan.com/tx/${receipt.logs[1].transactionHash}`));
-      setTimeout(() => {process.exit()},2000);
+      setTimeout(() => {process.exit()},10000);
     }catch(err){
       let error = JSON.parse(JSON.stringify(err));
         console.log(`Error caused by : 
