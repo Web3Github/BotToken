@@ -46,7 +46,7 @@ let jmlBnb = 0;
 
 const bscMainnetUrl = 'https://bsc-dataseed1.ninicoin.io/' //https://bsc-dataseed1.defibit.io/ https://bsc-dataseed.binance.org/
 //const bscMainnetUrl = 'https://data-seed-prebsc-1-s1.binance.org:8545/' // WHEN TESTNET
-const wss = 'wss://patient-damp-frog.bsc.quiknode.pro/668b094a1fd1185b3f60c7c420ad635eb8622359/';
+const wss = 'wss://bsc-ws-node.nariox.org:443';
 const mnemonic = process.env.YOUR_MNEMONIC //your memonic;
 const tokenIn = data.WBNB;
 const tokenOut = data.to_PURCHASE;
